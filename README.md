@@ -2,6 +2,9 @@
 ## Intro
 GENESPACE is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
 
+![](images/catdog.jpeg)
+Visualization of synteny between a cat and dog, prior to the invention of GENESPACE
+
 <details>
 <summary><strong> Part 1: </strong> Installation and Environment Setup </summary>
 We will execute GENESPACE in the R environment, but it requires several dependencies that are usually best installed and run on a high performance cluster or server, rather than on your local machine.
@@ -167,7 +170,8 @@ tmp/             → Temporary working files (can usually be ignored)
 
 <details>
 <summary><strong> Part 4: </strong> Plots are what we live for </summary>
-## Changing GENESPACE Synteny Plots
+
+### Changing GENESPACE Synteny Plots
 Once you visualize your first plot, you may want to change the species order, or change the orientation of some chromosomes. We can do this easily in GENESPACE!
 
 Here is an example of a Riparian plot of Panthera (which are highly syntenic) before any customizations:
