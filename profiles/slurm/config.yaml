@@ -1,0 +1,37 @@
+# Slurm profile configuration for ROH pipeline
+jobs: 50  # Maximum number of concurrent jobs
+latency-wait: 60  # Time to wait for output files to appear (seconds)
+restart-times: 0  # Number of times to restart failed jobs
+max-jobs-per-second: 10  # Rate limiting for job submission
+
+# Default resources for all jobs
+default-resources:
+  - mem_mb=8000  # 8GB memory
+  - runtime=120  # 2 hours in minutes
+  - cpus_per_task=1
+  - partition=epyc
+  - account=armstronglab
+
+# Cluster submission command template
+cluster: "mkdir -p logs/slurm/{rule}_{wildcards} && sbatch --account={resources.account} --partition={resources.partition} --time={resources.runtime} --mem={resources.mem_mb} --cpus-per-task={resources.cpus_per_task} --mail-type=END,FAIL --mail-user=respl001@ucr.edu --output=logs/slurm/{rule}_{wildcards}/{rule}_{wildcards}_%j.out --error=logs/slurm/{rule}_{wildcards}/{rule}_{wildcards}_%j.err --job-name={rule}_{wildcards} --parsable"
+
+# Status check command
+cluster-status: "python3 profiles/slurm/slurm_status.py"
+
+# Cancel command
+cluster-cancel: "scancel"
+
+# Print shell commands for debugging
+printshellcmds: true
+
+# Keep going if some jobs fail
+keep-going: false
+
+# Rerun incomplete jobs
+rerun-incomplete: false
+
+# Use conda environments if available
+use-conda: false
+
+# Use singularity if containers are specified
+use-singularity: false

@@ -1,0 +1,7 @@
+mcscanx_path: "/opt/linux/rocky/8.x/x86_64/pkgs/MCScanX/r51_g97e74f4"
+results_dir: "results/cats"
+raw_genomes: "/bigdata/armstronglab/respl001/side_quests/snow_leopard/SnowLeopardSynteny/data/cats/raw_genomes"
+genomes2run_ncbi: ["clouded_leopard", "domestic_cat", "jaguar", "leopard", "tiger", "puma"]
+# genomes2run_other: ["lion", "snow_leopard"]
+genomes2run_custom: ["lion", "snow_leopard"]
+
