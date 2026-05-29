@@ -1,4 +1,4 @@
-# Genespace_For_Beginners
+# Genespace For Beginners
 ## Intro
 GENESPACE is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
 
@@ -32,8 +32,9 @@ Once in R, the easiest way to install GENESPACE uses the package devtools (which
 ```{R}
 if (!requireNamespace("devtools", quietly = TRUE))
     install.packages("devtools")
-devtools::install_github("jtlovell/GENESPACE")
+devtools::install_github("jtlovell/GENESPACE") 
 ```
+Depending on your cluster, you may need to add 'force = TRUE' to the end of the GENESPACE installation command.
 
 ### 5. Install R dependencies
 If they are not yet installed, install_github will install a few dependencies directly (ggplot2, igraph, dbscan, R.utils, parallel). However, you will need to install the bioconductor packages separately:
@@ -53,6 +54,7 @@ GENESPACE requires three input files per genome. These files must be consistent 
 
 ### 1. Genome sequece (`.fna`)
 - FASTA file containing the DNA sequences of the genome assembly (chromosomes, scaffolds, or contigs).
+- Provides coordinate map for the feature files.
 
 Example:
 ```{text}
@@ -61,12 +63,12 @@ ATGCGT...
 ```
 
 ### 2. Genome annotation (`.gff3`)
-- GFF3 file describing where genes and their features are located on the genome.
+- GFF3 file describing where genes and their features are located in the genome assembly
 - Includes positions for genes, transcripts, exons, and CDS regions.
-- Must be valid GFF3 format (not all .gff files are compliant).
+- Must be valid GFF3 format (not all .gff files are compliant). GFF versions are listed in the headers of the files.
 
 Key fields:
-- Chromosome/contig name (must match .fna)
+- Chromosome/contig name (must match the naming syntax in the .fna file)
 - Feature type (gene, mRNA, CDS, etc.)
 - Start and end positions
 - Strand (+ or -)
@@ -99,15 +101,32 @@ GENESPACE links these together to identify orthologs and syntenic regions across
 - Matching IDs: Gene/transcript IDs in the `.gff3` must match sequence headers in the `.faa`.
 - Same annotation source: All three files must come from the same genome build and annotation version.
 - Consistent naming: Chromosome/contig names in `.gff3` must match those in `.fna`.
-- Valid GFF3: Improperly formatted GFF files are a common source of errors.
+- Valid GFF3: Improperly formatted GFF files are a common source of errors. See GENESPACE website for more details.
 </details>
 
-## How to Run GENESPACE
-**NOTE:** the following scripts and tutorials assume NCBI annotated genomes. If you have otherwise annotated genomes, see the [GENESPACE documentation](https://github.com/jtlovell/GENESPACE) for help. 
+<details>
+<summary><strong> Part 3: </strong> Running GENESPACE! </summary>
+
+**NOTE:** the following scripts and tutorials assume NCBI annotated genomes. If you have genomes annotated with other software, see the [GENESPACE documentation](https://github.com/jtlovell/GENESPACE) or call 911-John-Lovell for help. 
 
 Now that we've installed all necessary packages and environments, we are ready to run GENESPACE!
 
-### Step 1: Parse Annotations
+### Step 1: Establish your directory structure
+Each species or individual genome that you want to analyze should have its own folder. For example, your genespace folder should look something like this with two different species:
+```text
+genespace_run/
+└── genome_files
+    ├── species1
+    │   ├── species1.fna
+    │   ├── species1.gff
+    │   ├── species1.faa
+    ├── species2
+    │   ├── species2.fna
+    │   ├── species2.gff
+    │   ├── species2.faa
+```
+
+### Step 2: Parse Annotations
 Parse the annotations to fastas with headers that match a gene bed file. Use the built-in `parse_annotations` function in R:
 ```{R}
 library(GENESPACE)
@@ -142,7 +161,7 @@ parsedPaths<- parse_annotations(
   presets = "ncbi",
   genespaceWd = wd)
 ```
-### Step 2: Initialize GENESPACE Run
+### Step 3: Initialize GENESPACE Run
 The function `init_genespace` does most of the heavy lifting in terms of checking to make sure that the input data is OK. It also produces the correct directory structure and corresponding paths for the GENESPACE run. 
 
 ```{R}
