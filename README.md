@@ -1,4 +1,4 @@
-# Genespace_For_Dummies
+# Genespace_For_Beginners
 ## Intro
 GENESPACE is a super cool tool that does a lot of things, but in this tutorial we'll show you how to use it to see synteny between individuals of different species
 
@@ -170,6 +170,9 @@ tmp/             → Temporary working files (can usually be ignored)
 ## Changing GENESPACE Synteny Plots
 Sometimes, the plots it makes maybe don't list the species in the order you want, or it shows inversions where you know there aren't any. This can be fixed!
 
+This is an image of my plot before doing anything custom:
+![First Riparian Plot](images/domestic_cat_bp.rip_1.jpg)
+
 For example, if I want to change the order of my species, I'll use the `genomeIDs` parameter in the `plot_riparian` function. As a note, the first listed species is going to be the one appearing at the bottom of the plot, and the last listed here will be the top:
 ```{R}
 # plot BASE PAIR riparian
@@ -188,6 +191,8 @@ rip <- plot_riparian(
     "domestic_cat"
   )
 ```
+That looks like this: 
+![Second Riparian Plot](images/domestic_cat_bp.rip_2.jpg)
 I also want to use a custom chromosomal order, and I can do that here: 
 ```{R}
 rip <- plot_riparian(
@@ -214,7 +219,8 @@ rip <- plot_riparian(
   ),
 )
 ```
-
+You can see that change here: 
+![Third Riparian Plot](images/domestic_cat_bp.rip_3.jpg)
 Let's say that I also want to swap 2 chromsomes/scaffolds in the leopard, and 2 in jaguar. I would do that by first identifying those genomic regions:
 ```{R}
 # identify the regions
@@ -255,3 +261,5 @@ rip <- plot_riparian(
   invertTheseChrs = invchr
 )
 ```
+I went ahead and cleaned up all the chromomsomes I wanted to swap. That cleans things up! And look like this:
+![Fourth Riparian Plot](images/domestic_cat_bp.rip_4.jpg)
