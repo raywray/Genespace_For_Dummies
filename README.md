@@ -1,8 +1,11 @@
 # Genespace_For_Beginners
 ## Intro
-GENESPACE is a super cool tool that does a lot of things, but in this tutorial we'll show you how to use it to see synteny between individuals of different species
+GENESPACE is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
 
-## Installation/Environment Setup
+<details>
+<summary><b>Installation and Environment Setup</b></summary>
+We will execute GENESPACE in the R environment, but it requires several dependencies that are usually best installed and run on a high performance cluster or server, rather than on your local machine.
+
 ### 1. R
 GENESPACE is meant to be run interactively in the R environment for statistical computing. So, you need to have R installed. See [CRAN](https://www.r-project.org/) for the most recent release.
 
@@ -20,7 +23,7 @@ Regardless of how OrthoFinder is installed, ensure that you have OrthoFinder ver
 `MCScanX` should be installed from [github](https://github.com/wyp1125/MCScanX).
 
 ### 4. GENESPACE
-Once the above 3rd party dependencies are installed, get into R. If you made a conda environment, its useful to open R directly from that environment so that OrthoFinder stays in the path.
+Once the above dependencies are installed, start an R instance. If you made a conda environment, its useful to open R directly from that environment so that OrthoFinder stays in the path.
 ```{bash}
 conda activate orthofinder
 R
@@ -41,12 +44,12 @@ BiocManager::install(c("Biostrings", "rtracklayer"))
 
 library(GENESPACE)
 ```
-
-## Required Input Files
+</details>
+## Preparing the Required Input Files
 GENESPACE requires three input files per genome. These files must be consistent with each other (same annotation, matching gene IDs). 
+
 ### 1. Genome sequece (`.fna`)
 - FASTA file containing the DNA sequences of the genome assembly (chromosomes, scaffolds, or contigs).
-- This is the reference sequence used for all coordinates.
 
 Example:
 ```{text}
