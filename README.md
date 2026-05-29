@@ -50,25 +50,14 @@ library(GENESPACE)
 <details>
 <summary><strong> Part 2: </strong> Preparing the Required Input Files </summary>
 
-GENESPACE requires three input files per genome. These files must be consistent with each other (same annotation, matching gene IDs). 
+GENESPACE requires two input files per genome. These files must be consistent with each other (same annotation, matching gene IDs). 
 
-### 1. Genome sequece (`.fna`)
-- FASTA file containing the DNA sequences of the genome assembly (chromosomes, scaffolds, or contigs).
-- Provides coordinate map for the feature files.
-
-Example:
-```{text}
->chr1
-ATGCGT...
-```
-
-### 2. Genome annotation (`.gff3`)
+### 1. Genome annotation (`.gff3`)
 - GFF3 file describing where genes and their features are located in the genome assembly
 - Includes positions for genes, transcripts, exons, and CDS regions.
 - Must be valid GFF3 format (not all .gff files are compliant). GFF versions are listed in the headers of the files.
 
 Key fields:
-- Chromosome/contig name (must match the naming syntax in the .fna file)
 - Feature type (gene, mRNA, CDS, etc.)
 - Start and end positions
 - Strand (+ or -)
@@ -79,7 +68,7 @@ Example:
 chr1  source  gene  1000  5000  .  +  .  ID=gene1
 ```
 
-### 3. Protein sequences (`.faa`)
+### 2. Protein sequences (`.faa`)
 - FASTA file containing translated protein sequences from coding regions (CDS).
 - Used for sequence similarity searches (e.g., DIAMOND) to identify homologous genes.
 
@@ -91,7 +80,6 @@ MTEYKLVVVGAGGVGKSALTIQLIQ...
 
 ### How these files relate
 Each file represents a different layer of information:
-- `.fna` → the DNA sequence
 - `.gff3` → the gene locations and structure
 - `.faa` → the protein sequences encoded by those genes
 
@@ -99,7 +87,7 @@ GENESPACE links these together to identify orthologs and syntenic regions across
 
 ### Critical requirements
 - Matching IDs: Gene/transcript IDs in the `.gff3` must match sequence headers in the `.faa`.
-- Same annotation source: All three files must come from the same genome build and annotation version.
+- Same annotation source: Files must come from the same genome build and annotation version.
 - Consistent naming: Chromosome/contig names in `.gff3` must match those in `.fna`.
 - Valid GFF3: Improperly formatted GFF files are a common source of errors. See GENESPACE website for more details.
 </details>
@@ -117,11 +105,9 @@ Each species or individual genome that you want to analyze should have its own f
 genespace_run/
 └── genome_files
     ├── species1
-    │   ├── species1.fna
     │   ├── species1.gff
     │   ├── species1.faa
     ├── species2
-    │   ├── species2.fna
     │   ├── species2.gff
     │   ├── species2.faa
 ```
@@ -135,7 +121,7 @@ genomeRepo <- "~/path/to/genespace_run/genome_files"
 wd <- "~/path/to/genespace_run/"
 path2mcscanx <- "~/path/to/MCScanX/"
 
-genomes2run <- ("species1", "species2")
+genomes2run <- c("species1", "species2")
 
 parsedPaths<- parse_annotations(
   rawGenomeRepo = genomeRepo,
@@ -177,13 +163,17 @@ riparian/        → Intermediate data for synteny graph construction
 syntenicHits/    → Identified syntenic gene pairs across genomes
 tmp/             → Temporary working files (can usually be ignored)
 ```
-## Changing GENESPACE Synteny Plots
-Sometimes, the plots it makes maybe don't list the species in the order you want, or it shows inversions where you know there aren't any. This can be fixed!
+</details>
 
-This is an image of my plot before doing anything custom:
+<details>
+<summary><strong> Part 4: </strong> Plots are what we live for </summary>
+## Changing GENESPACE Synteny Plots
+Once you visualize your first plot, you may want to change the species order, or change the orientation of some chromosomes. We can do this easily in GENESPACE!
+
+Here is an example of a Riparian plot of Panthera (which are highly syntenic) before any customizations:
 ![First Riparian Plot](images/domestic_cat_bp.rip_1.jpg)
 
-For example, if I want to change the order of my species, I'll use the `genomeIDs` parameter in the `plot_riparian` function. As a note, the first listed species is going to be the one appearing at the bottom of the plot, and the last listed here will be the top:
+If we want to change the order of these species, we can use the `genomeIDs` parameter in the `plot_riparian` function. As a note, the first listed species is going to be the one appearing at the bottom of the plot, and the last listed here will be the top:
 ```{R}
 # plot BASE PAIR riparian
 # changing useOrder to TRUE will result in gene order plot
@@ -201,9 +191,9 @@ rip <- plot_riparian(
     "domestic_cat"
   )
 ```
-That looks like this: 
+That then outputs this plot: 
 ![Second Riparian Plot](images/domestic_cat_bp.rip_2.jpg)
-I also want to use a custom chromosomal order, and I can do that here: 
+We can also customize the order of the chromosomes, like so: 
 ```{R}
 rip <- plot_riparian(
   gsParam = gparam,
@@ -231,7 +221,7 @@ rip <- plot_riparian(
 ```
 You can see that change here: 
 ![Third Riparian Plot](images/domestic_cat_bp.rip_3.jpg)
-Let's say that I also want to swap 2 chromsomes/scaffolds in the leopard, and 2 in jaguar. I would do that by first identifying those genomic regions:
+Let's say that we also want to change the order of 2 chromsomes/scaffolds in the leopard, and 2 in jaguar. We can do this by first identifying those genomic regions:
 ```{R}
 # identify the regions
 invars <- list(
@@ -271,5 +261,12 @@ rip <- plot_riparian(
   invertTheseChrs = invchr
 )
 ```
-I went ahead and cleaned up all the chromomsomes I wanted to swap. That cleans things up! And look like this:
+After cleaning everything up you might get a plot that looks like this:
 ![Fourth Riparian Plot](images/domestic_cat_bp.rip_4.jpg)
+</details>
+
+<details>
+<summary><strong> Part 5: </strong> Now it's your turn! </summary>
+
+
+</details>
