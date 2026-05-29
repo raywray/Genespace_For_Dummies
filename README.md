@@ -269,8 +269,8 @@ After cleaning everything up you might get a plot that looks like this:
 <details>
 <summary><strong> Part 5: </strong> Now it's your turn! </summary>
 
-<p align="center">
-  <img src="images/catdog.jpeg" width="400">
+<p align="left">
+  <img src="images/catdog.jpeg" width="200">
   <br>
   <em>Synteny between a cat and dog, prior to the invention of GENESPACE.</em>
 </p>
