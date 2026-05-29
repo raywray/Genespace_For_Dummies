@@ -2,8 +2,7 @@
 ## Intro
 GENESPACE is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
 
-![](images/catdog.jpeg)
-Visualization of synteny between a cat and dog, prior to the invention of GENESPACE
+![Synteny between a cat and dog, prior to the invention of GENESPACE](images/catdog.jpeg)
 
 <details>
 <summary><strong> Part 1: </strong> Installation and Environment Setup </summary>
