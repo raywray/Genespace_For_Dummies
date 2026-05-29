@@ -107,12 +107,12 @@ GENESPACE links these together to identify orthologs and syntenic regions across
 <details>
 <summary><strong> Part 3: </strong> Running GENESPACE! </summary>
 
-**NOTE:** the following scripts and tutorials assume NCBI annotated genomes. If you have genomes annotated with other software, see the [GENESPACE documentation](https://github.com/jtlovell/GENESPACE) or call 911-John-Lovell for help. 
+**NOTE:** the following scripts and tutorials assume annotations in the NCBI. If you have genomes annotated with other software, see the [GENESPACE documentation](https://github.com/jtlovell/GENESPACE) or call 411-John-Lovell for help. 
 
 Now that we've installed all necessary packages and environments, we are ready to run GENESPACE!
 
 ### Step 1: Establish your directory structure
-Each species or individual genome that you want to analyze should have its own folder. For example, your genespace folder should look something like this with two different species:
+Each species or individual genome that you want to analyze should have its own folder. Note that, the genomes do not have to be in the genespace folder you are working in, but, they must be labeled. Here is an example below using two different species:
 ```text
 genespace_run/
 └── genome_files
@@ -127,15 +127,15 @@ genespace_run/
 ```
 
 ### Step 2: Parse Annotations
-Parse the annotations to fastas with headers that match a gene bed file. Use the built-in `parse_annotations` function in R:
+Parse the annotations to fastas with headers that match a gene bed file. We are assuming the directory structure above. Use the built-in `parse_annotations` function in R:
 ```{R}
 library(GENESPACE)
 
-genomeRepo <- "~/path/to/store/rawGenomes"
-wd <- "~/path/to/genespace/workingDirectory"
+genomeRepo <- "~/path/to/genespace_run/genome_files"
+wd <- "~/path/to/genespace_run/"
 path2mcscanx <- "~/path/to/MCScanX/"
 
-genomes2run <- ("list", "of", "genomes")
+genomes2run <- ("species1", "species2")
 
 parsedPaths<- parse_annotations(
   rawGenomeRepo = genomeRepo,
@@ -144,23 +144,7 @@ parsedPaths<- parse_annotations(
   presets = "ncbi",
   genespaceWd = wd)
 ```
-For example, if I were running the genomes of some species of *Panthera*, I would do the following:
-```{R}
-library(GENESPACE)
 
-genomeRepo <- "data/cats/raw_genomes"
-wd <- "results/cats"
-path2mcscanx <- "/opt/linux/rocky/8.x/x86_64/pkgs/MCScanX/r51_g97e74f4"
-
-genomes2run <- ("clouded_leopard", "domestic_cat", "jaguar", "leopard", "tiger", "puma")
-
-parsedPaths<- parse_annotations(
-  rawGenomeRepo = genomeRepo,
-  genomeDirs = genomes2run,
-  genomeIDs = genomes2run,
-  presets = "ncbi",
-  genespaceWd = wd)
-```
 ### Step 3: Initialize GENESPACE Run
 The function `init_genespace` does most of the heavy lifting in terms of checking to make sure that the input data is OK. It also produces the correct directory structure and corresponding paths for the GENESPACE run. 
 
