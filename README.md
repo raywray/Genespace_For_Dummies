@@ -3,7 +3,7 @@
 GENESPACE is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
 
 <details>
-<summary><b>Installation and Environment Setup</b></summary>
+<summary><strong> #Part 1: </strong> Installation and Environment Setup </summary>
 We will execute GENESPACE in the R environment, but it requires several dependencies that are usually best installed and run on a high performance cluster or server, rather than on your local machine.
 
 ### 1. R
