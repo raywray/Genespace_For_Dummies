@@ -2,8 +2,6 @@
 ## Intro
 GENESPACE is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
 
-![Synteny between a cat and dog, prior to the invention of GENESPACE](images/catdog.jpeg)
-
 <details>
 <summary><strong> Part 1: </strong> Installation and Environment Setup </summary>
 We will execute GENESPACE in the R environment, but it requires several dependencies that are usually best installed and run on a high performance cluster or server, rather than on your local machine.
@@ -270,6 +268,12 @@ After cleaning everything up you might get a plot that looks like this:
 
 <details>
 <summary><strong> Part 5: </strong> Now it's your turn! </summary>
+
+<p align="center">
+  <img src="images/catdog.jpeg" width="700">
+  <br>
+  <em>Synteny between a cat and dog, prior to the invention of GENESPACE.</em>
+</p>
 
 
 </details>
