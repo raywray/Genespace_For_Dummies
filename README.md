@@ -3,7 +3,7 @@
 GENESPACE is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
 
 <details>
-<summary><strong> #Part 1: </strong> Installation and Environment Setup </summary>
+<summary><strong> Part 1: </strong> Installation and Environment Setup </summary>
 We will execute GENESPACE in the R environment, but it requires several dependencies that are usually best installed and run on a high performance cluster or server, rather than on your local machine.
 
 ### 1. R
@@ -45,7 +45,10 @@ BiocManager::install(c("Biostrings", "rtracklayer"))
 library(GENESPACE)
 ```
 </details>
-## Preparing the Required Input Files
+
+<details>
+<summary><strong> Part 2: </strong> Preparing the Required Input Files </summary>
+
 GENESPACE requires three input files per genome. These files must be consistent with each other (same annotation, matching gene IDs). 
 
 ### 1. Genome sequece (`.fna`)
@@ -97,6 +100,7 @@ GENESPACE links these together to identify orthologs and syntenic regions across
 - Same annotation source: All three files must come from the same genome build and annotation version.
 - Consistent naming: Chromosome/contig names in `.gff3` must match those in `.fna`.
 - Valid GFF3: Improperly formatted GFF files are a common source of errors.
+</details>
 
 ## How to Run GENESPACE
 **NOTE:** the following scripts and tutorials assume NCBI annotated genomes. If you have otherwise annotated genomes, see the [GENESPACE documentation](https://github.com/jtlovell/GENESPACE) for help. 
