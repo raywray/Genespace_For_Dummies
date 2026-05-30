@@ -274,7 +274,7 @@ In this section, we will look at synteny between cats and dogs using publicly av
 <p align="left">
   <img src="images/catdog.jpeg" width="200">
   <br>
-  <em>Attempted synteny between a cat and dog, 
+  <em>Attempts at synteny between a cat and dog 
       prior to the invention of GENESPACE.</em>
 </p>
 
