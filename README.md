@@ -1,6 +1,6 @@
 # Genespace For Beginners
 ## Intro
-GENESPACE is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
+GENESPACE [^1] is a super cool tool that has a variety of functions, but in this tutorial we'll show you how to use it to visualize synteny between different species.
 
 <details>
 <summary><strong> Part 1: </strong> Installation and Environment Setup </summary>
@@ -10,7 +10,7 @@ We will execute GENESPACE in the R environment, but it requires several dependen
 GENESPACE is meant to be run interactively in the R environment for statistical computing. So, you need to have R installed. See [CRAN](https://www.r-project.org/) for the most recent release.
 
 ### 2. Orthofinder
-OrthoFinder (which includes `DIAMOND2`) is most simply installed via conda (in the shell, not R).
+OrthoFinder (which includes `DIAMOND2`) is most simply installed via conda (in the shell, not R) [^2].
 ```{bash}
 conda create -n orthofinder
 conda activate orthofinder
@@ -20,7 +20,7 @@ If conda is not available on your machine, you can install orthofinder from a nu
 Regardless of how OrthoFinder is installed, ensure that you have OrthoFinder version >= 2.5.4 and DIAMOND version >= 2.0.14.152.
 
 ### 3. MCScanX
-`MCScanX` should be installed from [github](https://github.com/wyp1125/MCScanX).
+`MCScanX` should be installed from [github](https://github.com/wyp1125/MCScanX) [^3].
 
 ### 4. GENESPACE
 Once the above dependencies are installed, start an R instance. If you made a conda environment, its useful to open R directly from that environment so that OrthoFinder stays in the path.
@@ -428,3 +428,10 @@ If you have done everything correctly you should see the following:
 </details>
 
 Using modifications of the previous command, you can replot to your heart's content. 
+
+[^1]: Lovell JT et al. 2022. GENESPACE tracks regions of interest and gene copy number variation across multiple genomes.
+
+[^2]: Emms DM, Kelly S. 2019. OrthoFinder: phylogenetic orthology inference for comparative genomics.
+
+[^3]: Wang Y et al. 2024. Detection of colinear blocks and synteny and evolutionary analyses based on utilization of MCScanX. 
+
