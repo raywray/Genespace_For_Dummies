@@ -272,7 +272,8 @@ After cleaning everything up you might get a plot that looks like this:
 <p align="left">
   <img src="images/catdog.jpeg" width="200">
   <br>
-  <em>Synteny between a cat and dog, prior to the invention of GENESPACE.</em>
+  <em>Attempted synteny between a cat and dog, 
+      prior to the invention of GENESPACE.</em>
 </p>
 
 
