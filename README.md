@@ -269,6 +269,8 @@ After cleaning everything up you might get a plot that looks like this:
 <details>
 <summary><strong> Part 5: </strong> Now it's your turn! </summary>
 
+In this section, we will look at synteny between cats and dogs using publicly avaialable data. 
+
 <p align="left">
   <img src="images/catdog.jpeg" width="200">
   <br>
@@ -276,5 +278,167 @@ After cleaning everything up you might get a plot that looks like this:
       prior to the invention of GENESPACE.</em>
 </p>
 
+The cat data can be downloaded here.
+The dog data can be downloaded here.
 
+# 1. Set up directories
+
+```{bash}
+mkdir -p genome_files/cat
+mkdir -p genome_files/dog
+mkdir -p genespace_run
+```
+
+Your project will look like this:
+
+```text
+project/
+├── genome_files/
+│   ├── cat/
+│   └── dog/
+└── genespace_run/
+```
+---
+# 2. Download NCBI annotation files
+
+GENESPACE needs:
+
+- a genome annotation file: `*_genomic.gff.gz`
+- a translated coding sequence peptide file: `*_translated_cds.faa.gz`
+
+## Cat
+
+```{bash}
+cd genome_files/cat
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/016/509/475/GCF_016509475.1_Fcat_Pben_1.1_paternal_pri/GCF_016509475.1_Fcat_Pben_1.1_paternal_pri_genomic.gff.gz
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/016/509/475/GCF_016509475.1_Fcat_Pben_1.1_paternal_pri/GCF_016509475.1_Fcat_Pben_1.1_paternal_pri_translated_cds.faa.gz
+
+cd ../..
+```
+
+## Dog
+
+```{bash}
+cd genome_files/dog
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_genomic.gff.gz
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_translated_cds.faa.gz
+
+cd ../..
+```
+
+After downloading, the directory should look like this:
+
+```text
+genome_files/
+├── cat/
+│   ├── GCF_016509475.1_Fcat_Pben_1.1_paternal_pri_genomic.gff.gz
+│   └── GCF_016509475.1_Fcat_Pben_1.1_paternal_pri_translated_cds.faa.gz
+└── dog/
+    ├── GCF_014441545.1_ROS_Cfam_1.0_genomic.gff.gz
+    └── GCF_014441545.1_ROS_Cfam_1.0_translated_cds.faa.gz
+```
+
+---
+
+# 3. Parse annotations with GENESPACE
+
+Now we will use `parse_annotations()` to convert the NCBI files into the input format required by GENESPACE.
+
+```{r}
+library(GENESPACE)
+
+genomeRepo <- "genome_files"
+wd <- "genespace_run"
+
+genomes2run <- c("cat", "dog")
+
+parsedPaths <- parse_annotations(
+  rawGenomeRepo = genomeRepo,
+  genomeDirs = genomes2run,
+  genomeIDs = genomes2run,
+  presets = "ncbi",
+  genespaceWd = wd,
+  gffString = "genomic.gff.gz",
+  faString = "translated_cds.faa.gz"
+)
+```
+
+This should create:
+
+```text
+genespace_run/
+├── bed/
+│   ├── cat.bed
+│   └── dog.bed
+└── peptide/
+    ├── cat.fa
+    └── dog.fa
+```
+
+The `bed/` files contain gene coordinates, and the `peptide/` files contain protein sequences with matching IDs.
+
+---
+
+# 4. Check parsed files
+
+```{r}
+list.files(file.path(wd, "bed"))
+list.files(file.path(wd, "peptide"))
+```
+
+You should see one BED file and one peptide FASTA file for each genome.
+
+---
+
+# 5. Initialize GENESPACE
+
+Update `path2mcscanx` to match the location of MCScanX on your system.
+
+```{r}
+path2mcscanx <- "/path/to/MCScanX"
+
+genomeIDs <- c("cat", "dog")
+
+gpar <- init_genespace(
+  genomeIDs = genomeIDs,
+  wd = wd,
+  path2mcscanx = path2mcscanx
+)
+```
+
+---
+
+# 6. Run GENESPACE
+
+```{r}
+out <- run_genespace(gpar)
+```
+
+This step will run orthology inference and synteny detection.
+
+Depending on your system, this may take several minutes.
+
+---
+
+# 7. Plot synteny between cat and dog
+
+```{r}
+rip <- plot_riparian(
+  gsParam = out,
+  refGenome = "cat",
+  genomeIDs = c("dog", "cat"),
+  useOrder = FALSE
+)
+
+rip
+```
+
+```{r, echo=FALSE, out.width="90%", fig.cap="Example placeholder for a cat-dog GENESPACE riparian plot."}
+# knitr::include_graphics("figures/cat_dog_riparian.png")
+```
+---
 </details>
