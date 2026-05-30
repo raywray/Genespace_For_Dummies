@@ -278,9 +278,6 @@ In this section, we will look at synteny between cats and dogs using publicly av
       prior to the invention of GENESPACE.</em>
 </p>
 
-The cat data can be downloaded here.
-The dog data can be downloaded here.
-
 # 1. Set up directories
 
 ```{bash}
@@ -300,11 +297,6 @@ project/
 ```
 ---
 # 2. Download NCBI annotation files
-
-GENESPACE needs:
-
-- a genome annotation file: `*_genomic.gff.gz`
-- a translated coding sequence peptide file: `*_translated_cds.faa.gz`
 
 ## Cat
 
@@ -361,9 +353,7 @@ parsedPaths <- parse_annotations(
   genomeDirs = genomes2run,
   genomeIDs = genomes2run,
   presets = "ncbi",
-  genespaceWd = wd,
-  gffString = "genomic.gff.gz",
-  faString = "translated_cds.faa.gz"
+  genespaceWd = wd
 )
 ```
 
@@ -383,18 +373,7 @@ The `bed/` files contain gene coordinates, and the `peptide/` files contain prot
 
 ---
 
-# 4. Check parsed files
-
-```{r}
-list.files(file.path(wd, "bed"))
-list.files(file.path(wd, "peptide"))
-```
-
-You should see one BED file and one peptide FASTA file for each genome.
-
----
-
-# 5. Initialize GENESPACE
+# 4. Initialize GENESPACE
 
 Update `path2mcscanx` to match the location of MCScanX on your system.
 
@@ -412,7 +391,7 @@ gpar <- init_genespace(
 
 ---
 
-# 6. Run GENESPACE
+# 5. Run GENESPACE
 
 ```{r}
 out <- run_genespace(gpar)
@@ -424,7 +403,7 @@ Depending on your system, this may take several minutes.
 
 ---
 
-# 7. Plot synteny between cat and dog
+# 6. Plot synteny between cat and dog
 
 ```{r}
 rip <- plot_riparian(
